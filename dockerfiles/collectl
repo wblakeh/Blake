@@ -1,12 +1,8 @@
-FROM pataquets/ubuntu:xenial
+FROM docker.io/centos:latest
 
-RUN \
-  apt-get update && \
-  DEBIAN_FRONTEND=noninteractive \
-    apt-get -y --no-install-recommends install collectl \
-  && \
-  apt-get clean && \
-  rm -rf /var/lib/apt/lists/*
+COPY collectl.rpm /
 
-ENTRYPOINT [ "collectl", "--nohup" ]
-CMD ["--ALL", "-f /var/log/collectl"]
+RUN dnf update -y && dnf install /collectl.rpm -y && dnf clean all && rm /collectl.rpm
+
+ENTRYPOINT ["/usr/bin/collectl"]
+CMD ["--nohup", "--all", "-f /collectl/host"]
