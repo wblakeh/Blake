@@ -1,4 +1,4 @@
-FROM docker.io/centos:latest
+FROM registry.access.redhat.com/ubi8
 
 COPY collectl.rpm /
 
