@@ -1,0 +1,7 @@
+FROM docker.io/golang:latest
+
+ENV PROFILE=""
+
+RUN go install github.com/google/pprof@latest; apt-get update; apt-get upgrade -y; apt-get install -y graphviz; apt-get clean;
+
+CMD go tool pprof -http=0.0.0.0:8080 $PROFILE
